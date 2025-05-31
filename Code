@@ -1,0 +1,200 @@
+import java.util.Random;
+import java.util.Scanner;
+
+class stonePaperScissorGame {
+
+    private Random rand = new Random();
+    private Scanner sc = new Scanner(System.in);
+
+    private int userChoice;
+    private int computerChoice;
+    
+    private boolean userWon;
+    private boolean computerWon;
+    private boolean matchDraw;
+    private String postGameMenu;
+    private String userChoiceDisplay;
+    private String computerChoiceDisplay;
+
+    public void setUserChoice() { // setter for User Choice
+        System.out.print(
+                "\nEnter Your Choice \n 0 for stone \n 1 for paper \n 2 for scissor \n ENTER YOUR CHOICE HERE : ");
+        this.userChoice = sc.nextInt();
+        System.out.println("");
+    }
+
+    public int getUserChoice() { // getter for User Choice
+        return userChoice;
+    }
+
+    public void setComputerChoice() { // setter for Computer Choice
+        this.computerChoice = rand.nextInt(3);
+    }
+
+    public int getComputerChoice() { // getter for Computer Choice
+        return computerChoice;
+    }
+
+    public void checkkResult() {
+        if (ConditionForComputerToWin(computerChoice, userChoice)) {
+            computerWon = true;
+        }
+
+        else if (ConditionForDraw(computerChoice, userChoice)) {
+            matchDraw = true;
+        }
+
+        else { // User Won
+            userWon = true;
+        }
+
+    }
+
+    public boolean ConditionForComputerToWin(int computerChoice, int userChoice) {
+        /*
+         * 
+         * 0 is rock
+         * 1 is paper
+         * 2 is scissor
+         * 
+         */
+
+        // Game Working Principles
+
+        /*
+         * 0 kills 2
+         * 1 kills 0
+         * 2 kills 1
+         */
+
+        return computerChoice == 0 && userChoice == 2 ||
+                computerChoice == 1 && userChoice == 0 ||
+                computerChoice == 2 && userChoice == 1;
+
+    }
+
+    public boolean ConditionForDraw(int computerChoice, int userChoice) {
+
+        return computerChoice == userChoice;
+    }
+
+    public void displayResult() {
+        if (userWon) {
+            System.out.println("\nHurray...! You WON..!");
+            System.out.println("computer got " + computerChoiceDisplay + " and you killed him with " + userChoiceDisplay
+                    + " That is " + userChoice);
+        } else if (computerWon) {
+            System.out.println("\nComputer Won...!");
+            System.out.println("computer got " + computerChoiceDisplay + " and your input was " + userChoiceDisplay
+                    + " That is " + userChoice);
+        } else if (matchDraw) {
+            System.out.println("\nIts a DRAW...!");
+            System.out.println("Both of you got " + userChoiceDisplay);
+        } else {
+            System.out.println("Something Went Wrong...!");
+        }
+
+    }
+
+    public void whatHappend() {
+        switch (computerChoice) {
+            case 0:
+                computerChoiceDisplay = "stone";
+                break;
+            case 1:
+                computerChoiceDisplay = "paper";
+                break;
+            case 2:
+                computerChoiceDisplay = "scissor";
+                break;
+            default:
+                System.out.println("CODE ME CHED-CHADDI KRI HAI PAKKA TUNE"); // EDITED
+        }
+
+        switch (userChoice) {
+            case 0:
+                userChoiceDisplay = "stone";
+                break;
+            case 1:
+                userChoiceDisplay = "paper";
+                break;
+            case 2:
+                userChoiceDisplay = "scissor";
+                break;
+            default:
+                System.out.println(
+                        "HAMARA USER HAGG DIYA HAI..... Bhaiyaa 0 se 2 ke bich me daalo.... kuch aur daalke Airplane nhi mill jayega "); // EDITED
+                userChoiceDisplay = "Vimal Paan Masala";
+                userWon = false;
+                computerWon = false;
+                matchDraw = false;
+        }
+    }
+
+    public void playAgain() {
+        System.out.println("Press E to EXIT...");
+        System.out.println("Press P to PLAY MORE...\n");
+
+        postGameMenu = sc.next();
+
+        switch (postGameMenu) {
+            case "E":
+            case "e":
+                System.out.println("Exiting....\nThankyou For Playing Rock Paper Scissor Made By Umair Malik");
+                break;
+
+            case "P":
+            case "p":
+                startGame();
+                resetGame();
+                break;
+
+            default:
+                System.out.println("Unexpected Input From User.... \n\nExiting");
+        }
+    }
+
+    public void startGame() {
+
+        setComputerChoice();
+        setUserChoice();
+        whatHappend();
+        checkkResult();
+        displayResult();
+        playAgain();
+    }
+
+    public void welcomeAndRules() {
+        System.out.println("Welcome to Stone Paper Scissors Game Made By Umair Malik");
+        System.out.println("\nHOW TO PLAY THIS EXITING GAME.....");
+        System.out.println(
+                "\nStone Paper Scissors is a timeless hand game of strategy and luck"
+                        + "Choose between stone, paper, or scissors, and compete against the"
+                        + "computer. Stone breaks scissors, scissors cut paper, and paper covers stone."
+                        + "It's a fast-paced challenge that will put your decision-making skills to the"
+                        + "test. Can you outsmart the computer?");
+    }
+
+    public void resetGame() {
+
+        userChoice = -1;
+        computerChoice = -1;
+        userWon = false;
+        computerWon = false;
+        matchDraw = false;
+        postGameMenu = null;
+        userChoiceDisplay = null;
+        computerChoiceDisplay = null;
+
+    }
+
+}
+
+public class stonePaperScissor {
+    public static void main(String[] args) {
+        stonePaperScissorGame player = new stonePaperScissorGame();
+        player.welcomeAndRules();
+        player.startGame();
+    }
+
+}
